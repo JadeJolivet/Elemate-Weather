@@ -1,30 +1,71 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import WeatherInfos from "./components/WeatherInfos.vue";
+import WeatherSearchForm from "./components/WeatherSearchForm.vue";
+import { getWeather } from "./services/weatherService";
+import { Weather } from "./models/Weather";
+
+export default defineComponent({
+  components: {
+    WeatherInfos,
+    WeatherSearchForm,
+  },
+  setup() {
+    const city = ref<string>("");
+    const weather = ref<Weather | null>(null);
+    const error = ref<string | null>(null);
+
+    const searchWeather = async (cityName: string) => {
+      try {
+        if (cityName) {
+          error.value = null;
+          weather.value = await getWeather(cityName);
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          error.value = err.message;
+        } else {
+          error.value = "Une erreur s'est produite";
+        }
+        weather.value = null;
+      }
+    };
+
+    return {
+      city,
+      weather,
+      error,
+      searchWeather,
+    };
+  },
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <section>
+    <main class="container">
+      <header>
+        <h1>Recherche Météo 🌤️</h1>
+      </header>
+
+      <WeatherSearchForm @search-weather="searchWeather" />
+
+      <section aria-live="polite">
+        <WeatherInfos v-if="weather" :weather="weather" />
+        <article
+          v-if="error"
+          class="alert alert-danger mt-3 text-center"
+          role="alert"
+        >
+          {{ error }}
+        </article>
+      </section>
+    </main>
+  </section>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+header h1 {
+  text-shadow: 2px 2px 4px rgba(2, 1, 49, 0.3);
 }
 </style>
