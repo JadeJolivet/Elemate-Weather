@@ -9,7 +9,6 @@ export const getWeather = async (cityName: string): Promise<WeatherType> => {
   );
   const data = await response.json();
   console.log(data);
-  
 
   if (data.error) {
     throw new Error(data.error.info);
@@ -19,7 +18,6 @@ export const getWeather = async (cityName: string): Promise<WeatherType> => {
   const temperature: number = data.current.temperature;
   const description: string = data.current.weather_descriptions[0];
   const icon: string = data.current.weather_icons[0];
-  const moreInfoUrl: string = `https://weatherstack.com/${city}`;
 
-  return new Weather(city, temperature, description, icon, moreInfoUrl);
+  return new Weather(city, temperature, description, icon);
 };

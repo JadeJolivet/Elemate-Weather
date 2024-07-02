@@ -20,9 +20,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="d-flex justify-content-center">
-    <form @submit.prevent="searchWeather" class="form-inline">
-      <fieldset>
+  <section class="d-flex justify-content-center mt-4">
+    <form
+      @submit.prevent="searchWeather"
+      class="form-inline p-3 bg-light bg-opacity-10 rounded shadow-sm border border-light"
+    >
+      <div class="form-group flex-grow-1">
         <input
           id="city"
           v-model="city"
@@ -31,10 +34,10 @@ export default defineComponent({
           required
           aria-label="Entrez une ville"
         />
-      </fieldset>
+      </div>
       <button
         type="submit"
-        class="btn btn-primary ml-2"
+        class="btn btn-primary ml-2 rounded-pill w-100 mt-3"
         aria-label="Rechercher"
       >
         Rechercher
@@ -42,10 +45,3 @@ export default defineComponent({
     </form>
   </section>
 </template>
-
-<style scoped>
-button.btn-primary {
-  border-radius: 1rem;
-  width: 100%;
-}
-</style>
