@@ -17,7 +17,7 @@ export default defineComponent({
     <figure>
       <img
         :src="weather.icon"
-        class="card-img-top weather-icon"
+        class="card-img-top weather-icon img-fluid"
         :alt="'Icone de météo pour ' + weather.description"
       />
       <figcaption class="sr-only">{{ weather.description }}</figcaption>

@@ -2,13 +2,13 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  emits: ['search-weather'],
+  emits: ["search-weather"],
   setup(_, { emit }) {
     const city = ref<string>("");
 
     const searchWeather = (event: Event) => {
       event.preventDefault();
-      emit('search-weather', city.value);
+      emit("search-weather", city.value);
     };
 
     return {
@@ -46,8 +46,6 @@ export default defineComponent({
 <style scoped>
 button.btn-primary {
   border-radius: 1rem;
-  background-color: #415bfe;
   width: 100%;
-  padding: 0.5rem;
 }
 </style>
